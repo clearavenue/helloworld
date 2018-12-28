@@ -10,5 +10,5 @@ public class CMSController {
 	@GetMapping("/cms")
 	public String home(final ModelMap model) {
 		return "cms";
-	}
+	}	
 }

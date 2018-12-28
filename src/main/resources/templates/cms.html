@@ -3,11 +3,89 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{default.html}">
 <head>
-	<title>Hello, world!</title>
+<title>Hello, world!</title>
 </head>
 <body>
 	<div class="container" layout:fragment="content">
-		<h1>CMS Operations TBD</h1>
+		<h1>CMS Operations</h1>
+
+		<div class="card">
+			<div class="card-header">
+				<button id="benchmarkButton" class="btn btn-success">Get Benchmarks</button>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">Benchmarks</h5>
+				<p class="card-text" id="benchmarkResults"></p>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<button id="submissionsButton" class="btn btn-success">Get Submissions</button>
+				<div>
+					<label for="taxpayerId">TaxPayerId:&nbsp;</label><input id="taxpayerId" />&nbsp;
+					<label for="nationalId">NationalId:&nbsp;</label><input id="nationalId" />&nbsp;
+					<label for="entityType">EntityType:&nbsp;</label><input id="entityType" />
+				</div>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">Submissions</h5>
+				<p class="card-text" id="submissionsResults"></p>
+			</div>
+		</div>
 	</div>
+
+
+	<th:block layout:fragment="scripts">
+		<script>
+			$(document).ready(function() {
+				$("#benchmarkButton").click(function() {
+					$.ajax({
+						url : '/getBenchmarks',
+						method : "GET",
+						success : function(response) {
+							$('#benchmarkResults').after(JSON.stringify(response));
+						},
+						error : function(xhr,ajaxOptions,thrownError) {
+							console.log("*** Error deleting event: xhr ["+ xhr.responseText	+ "] thrownError ["	+ thrownError + "]");
+							}
+					});
+				});
+				
+				$("#submissionsButton").click(function() {
+					$('#submissionsResults').text("");
+					var taxpayerId = $('#taxpayerId').val();
+					if (!taxpayerId)
+						taxpayerId = 'null';
+					var nationalId = $('#nationalId').val();
+					if (!nationalId)
+						nationalId = 'null';
+					var entityType = $('#entityType').val();
+					if (!entityType)
+						entityType = 'null';
+					
+					$.ajax({
+						url : '/getSubmissions/'+taxpayerId+'/'+nationalId+'/'+entityType,
+						method : "GET",
+						success : function(response) {
+							$('#submissionsResults').text(response);
+						},
+						error : function(xhr,ajaxOptions,thrownError) {
+							console.log("*** Error deleting event: xhr ["+ xhr.responseText	+ "] thrownError ["	+ thrownError + "]");
+							$('#submissionsResults').text(xhr.responseText);
+							}
+					});
+				});
+			});
+		</script>
+	</th:block>
+
+
 </body>
 </html>
+
+<!-- 
+<button class="btn btn-success"
+		th:onclick="|javascript:window.location.href='@{/getBenchmarks}'; return false;|">
+		Get Benchmarks</button> 
+-->
