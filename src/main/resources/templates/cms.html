@@ -15,22 +15,44 @@
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">Benchmarks</h5>
-				<p class="card-text" id="benchmarkResults"></p>
+				<textarea class="card-text" id="benchmarkResults" rows="10" cols="135"></textarea>
 			</div>
 		</div>
+		<br />
 
 		<div class="card">
 			<div class="card-header">
-				<button id="submissionsButton" class="btn btn-success">Get Submissions</button>
-				<div>
-					<label for="taxpayerId">TaxPayerId:&nbsp;</label><input id="taxpayerId" />&nbsp;
-					<label for="nationalId">NationalId:&nbsp;</label><input id="nationalId" />&nbsp;
-					<label for="entityType">EntityType:&nbsp;</label><input id="entityType" />
-				</div>
+				<button id="submissionsButton" class="btn btn-success"
+					data-toggle="tooltip" data-placement="top"
+					title="If you do not enter anything, I will supply defaults so you get results">
+					Get	Submissions</button>
+				<label for="taxpayerId">TaxPayerId:&nbsp;</label>
+				<input id="taxpayerId" type="number" data-toggle="tooltip" data-placement="top" title="length=9, must start with 000"/>&nbsp; 
+				<label for="nationalId">NationalId:&nbsp;</label>
+				<input id="nationalId" type="number" data-toggle="tooltip" data-placement="top" title="length=10"/>&nbsp; 
+				<label for="entityType">EntityType:&nbsp;</label>
+				<input id="entityType" data-toggle="tooltip" data-placement="top" data-html="true" title="individual <i>or</i> group" />
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">Submissions</h5>
-				<p class="card-text" id="submissionsResults"></p>
+				<textarea class="card-text" id="submissionsResults" rows="10" cols="135"></textarea>
+			</div>
+		</div>
+		<br />
+
+		<div class="card">
+			<div class="card-header">
+				<button id="scoreButton" class="btn btn-success"
+				data-toggle="tooltip" data-placement="top"
+				title="Modify request to see score">
+				Get Score Preview</button>
+				<div>
+					<textarea id="scoreRequest" rows="10" cols="135"></textarea>
+				</div>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">Score</h5>
+				<textarea class="card-text" id="scoreResults" rows="10" cols="135"></textarea>
 			</div>
 		</div>
 	</div>
@@ -38,54 +60,143 @@
 
 	<th:block layout:fragment="scripts">
 		<script>
-			$(document).ready(function() {
-				$("#benchmarkButton").click(function() {
-					$.ajax({
-						url : '/getBenchmarks',
-						method : "GET",
-						success : function(response) {
-							$('#benchmarkResults').after(JSON.stringify(response));
-						},
-						error : function(xhr,ajaxOptions,thrownError) {
-							console.log("*** Error deleting event: xhr ["+ xhr.responseText	+ "] thrownError ["	+ thrownError + "]");
-							}
-					});
-				});
-				
-				$("#submissionsButton").click(function() {
-					$('#submissionsResults').text("");
-					var taxpayerId = $('#taxpayerId').val();
-					if (!taxpayerId)
-						taxpayerId = 'null';
-					var nationalId = $('#nationalId').val();
-					if (!nationalId)
-						nationalId = 'null';
-					var entityType = $('#entityType').val();
-					if (!entityType)
-						entityType = 'null';
-					
-					$.ajax({
-						url : '/getSubmissions/'+taxpayerId+'/'+nationalId+'/'+entityType,
-						method : "GET",
-						success : function(response) {
-							$('#submissionsResults').text(response);
-						},
-						error : function(xhr,ajaxOptions,thrownError) {
-							console.log("*** Error deleting event: xhr ["+ xhr.responseText	+ "] thrownError ["	+ thrownError + "]");
-							$('#submissionsResults').text(xhr.responseText);
-							}
-					});
-				});
-			});
+			$(document)
+					.ready(
+							function() {
+								$('[data-toggle="tooltip"]').tooltip();
+								$("#scoreRequest").load("/defaultScoreRequest");
+
+								$("#benchmarkButton")
+										.click(
+												function() {
+													$
+															.ajax({
+																url : '/getBenchmarks',
+																method : "GET",
+																success : function(
+																		response) {
+																	$(
+																			'#benchmarkResults')
+																			.text(
+																					JSON
+																							.stringify(
+																									response,
+																									null,
+																									2));
+																},
+																error : function(
+																		xhr,
+																		ajaxOptions,
+																		thrownError) {
+																	console
+																			.log("*** Error deleting event: xhr ["
+																					+ xhr.responseText
+																					+ "] thrownError ["
+																					+ thrownError
+																					+ "]");
+																}
+															});
+												});
+
+								$("#submissionsButton")
+										.click(
+												function() {
+													$('#submissionsResults')
+															.text("");
+													var taxpayerId = $(
+															'#taxpayerId')
+															.val();
+													if (!taxpayerId)
+														taxpayerId = 'null';
+													var nationalId = $(
+															'#nationalId')
+															.val();
+													if (!nationalId)
+														nationalId = 'null';
+													var entityType = $(
+															'#entityType')
+															.val();
+													if (!entityType)
+														entityType = 'null';
+
+													$
+															.ajax({
+																url : '/getSubmissions/'
+																		+ taxpayerId
+																		+ '/'
+																		+ nationalId
+																		+ '/'
+																		+ entityType,
+																method : "GET",
+																success : function(
+																		response) {
+																	$(
+																			'#submissionsResults')
+																			.text(
+																					response);
+																},
+																error : function(
+																		xhr,
+																		ajaxOptions,
+																		thrownError) {
+																	console
+																			.log("*** Error deleting event: xhr ["
+																					+ xhr.responseText
+																					+ "] thrownError ["
+																					+ thrownError
+																					+ "]");
+																	$(
+																			'#submissionsResults')
+																			.text(
+																					xhr.responseText);
+																}
+															});
+												});
+
+								$("#scoreButton")
+										.click(
+												function() {
+													$('#scoreResults').text("");
+													var scoreReq = $(
+															'#scoreRequest')
+															.val();
+
+													$
+															.ajax({
+																url : '/getScore',
+																method : "POST",
+																data : {
+																	"req" : scoreReq
+																},
+																success : function(
+																		response) {
+																	$(
+																			'#scoreResults')
+																			.text(
+																					response);
+																},
+																error : function(
+																		xhr,
+																		ajaxOptions,
+																		thrownError) {
+																	console
+																			.log("*** Error deleting event: xhr ["
+																					+ xhr.responseText
+																					+ "] thrownError ["
+																					+ thrownError
+																					+ "]");
+																	$(
+																			'#scoreResults')
+																			.text(
+																					xhr.responseText);
+																}
+															});
+												});
+
+							});
 		</script>
 	</th:block>
 
 
 </body>
 </html>
-
-<!-- 
-<button class="btn btn-success"
-		th:onclick="|javascript:window.location.href='@{/getBenchmarks}'; return false;|">
-		Get Benchmarks</button> 
--->
