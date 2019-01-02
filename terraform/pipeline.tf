@@ -22,7 +22,7 @@ resource "aws_codepipeline" "helloworld_pipeline" {
         Owner = "clearavenue"
         Repo = "helloworld"
         Branch = "master"
-        OAuthToken = "55c67d1239985f2eed2f3d945ebbaf3b28df99ef"
+        OAuthToken = "1f933111661a9d8d6038a01716a8fc9254740db0"
       }
     }
     name = "Source"

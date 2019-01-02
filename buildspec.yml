@@ -6,13 +6,16 @@ phases:
       - echo Nothing in the install phase
   pre_build:
     commands:
-      - echo Nothing in the pre build phase
+      - echo Log into AWS ECR
+      - ${aws ecrget-login --no-include-email --region $AWS_DEFAULT_REGION}
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t helloworld .
+      - docker build -t $REPO_NAME:$TAG .
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo Pushing docker image to ECR
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazon.aws/$REPO_NAME:$TAG
       - echo This is where we would push to ECR?

@@ -14,6 +14,23 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
     image = "aws/codebuild/docker:18.09.0"
     type = "LINUX_CONTAINER"
     privileged_mode = true
+
+    environment_variable {
+      name = "AWS_DEFAULT_REGION"
+      value = "us-east-1"
+    }
+    environment_variable {
+      name = "$REPO_NAME"
+      value = "helloworld"
+    }
+    environment_variable {
+      name = "TAG"
+      value = "latest"
+    }
+    environment_variable {
+      name = "$AWS_ACCOUNT_ID"
+      value = "AKIAJL6VMF7PCI27EWJA"
+    }
   }
 
   "source" {
