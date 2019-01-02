@@ -10,6 +10,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPO_NAME:$REPO_TAG .
+      - docker tag $REPO_NAME:$REPO_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO_NAME:$REPO_TAG
   post_build:
     commands:
       - echo Build completed on `date`
