@@ -24,7 +24,7 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
       value = "helloworld"
     }
     environment_variable {
-      name = "TAG"
+      name = "REPO_TAG"
       value = "latest"
     }
     environment_variable {

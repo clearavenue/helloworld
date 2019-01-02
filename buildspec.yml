@@ -9,10 +9,10 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $REPO_NAME:$TAG .
+      - docker build -t $REPO_NAME:$REPO_TAG .
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing docker image to ECR
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazon.aws/$REPO_NAME:$TAG
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazon.aws/$REPO_NAME:$REPO_TAG
       - echo This is where we would push to ECR?

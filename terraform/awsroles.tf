@@ -24,6 +24,48 @@ resource "aws_iam_role" "helloworldrole" {
 EOF
 }
 
+resource "aws_iam_policy" "ecr_policy" {
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Resource": "*",
+      "Action": [
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:PutImage",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload",
+        "ecr:DescribeRepositories",
+        "ecr:GetRepositoryPolicy",
+        "ecr:ListImages",
+        "ecr:DeleteRepository",
+        "ecr:BatchDeleteImage",
+        "ecr:SetRepositoryPolicy",
+        "ecr:DeleteRepositoryPolicy"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "auth_policy" {
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow", "Resource": "*", "Action": ["ecr:GetAuthorizationToken"]
+    }
+  ]
+}
+EOF
+}
 
 data "aws_iam_policy" "codepipeline_policy" {
   arn = "arn:aws:iam::aws:policy/AWSCodePipelineFullAccess"
@@ -39,6 +81,16 @@ data "aws_iam_policy" "codebuild_policy" {
 
 data "aws_iam_policy" "cloudwatch_policy" {
   arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "auth_attachment" {
+  policy_arn = "${aws_iam_policy.auth_policy.arn}"
+  role = "${aws_iam_role.helloworldrole.name}"
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_attachment" {
+  policy_arn = "${aws_iam_policy.ecr_policy.arn}"
+  role = "${aws_iam_role.helloworldrole.name}"
 }
 
 resource "aws_iam_role_policy_attachment" "pipeline_access_attachment" {
