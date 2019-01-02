@@ -21,7 +21,7 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
     }
     environment_variable {
       name = "IMAGE_REPO_NAME"
-      value = "helloworld"
+      value = "helloworld_ecr"
     }
     environment_variable {
       name = "IMAGE_TAG"
@@ -29,7 +29,7 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
     }
     environment_variable {
       name = "AWS_ACCOUNT_ID"
-      value = "AKIAJL6VMF7PCI27EWJA"
+      value = "288524100095"
     }
   }
 
