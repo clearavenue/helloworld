@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Nothing in the install phase
+  pre_build:
+    commands:
+      - echo Nothing in the pre build phase
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t helloworld .
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo This is where we would push to ECR?
