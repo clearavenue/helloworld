@@ -20,7 +20,7 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
       value = "us-east-1"
     }
     environment_variable {
-      name = "$REPO_NAME"
+      name = "REPO_NAME"
       value = "helloworld"
     }
     environment_variable {
@@ -28,7 +28,7 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
       value = "latest"
     }
     environment_variable {
-      name = "$AWS_ACCOUNT_ID"
+      name = "AWS_ACCOUNT_ID"
       value = "AKIAJL6VMF7PCI27EWJA"
     }
   }
