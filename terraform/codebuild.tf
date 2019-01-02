@@ -20,11 +20,11 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
       value = "us-east-1"
     }
     environment_variable {
-      name = "REPO_NAME"
+      name = "IMAGE_REPO_NAME"
       value = "helloworld"
     }
     environment_variable {
-      name = "REPO_TAG"
+      name = "IMAGE_TAG"
       value = "latest"
     }
     environment_variable {
