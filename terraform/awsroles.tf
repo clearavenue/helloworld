@@ -71,6 +71,10 @@ data "aws_iam_policy" "beanstalk_policy"{
   arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkFullAccess"
 }
 
+data "aws_iam_policy" "ec2_policy" {
+  arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
 data "aws_iam_policy" "codepipeline_policy" {
   arn = "arn:aws:iam::aws:policy/AWSCodePipelineFullAccess"
 }
@@ -85,6 +89,11 @@ data "aws_iam_policy" "codebuild_policy" {
 
 data "aws_iam_policy" "cloudwatch_policy" {
   arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_attachement" {
+  policy_arn = "${data.aws_iam_policy.ec2_policy.arn}"
+  role = "${aws_iam_role.helloworldrole.name}"
 }
 
 resource "aws_iam_role_policy_attachment" "beanstalk_attachment" {
