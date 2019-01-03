@@ -67,6 +67,10 @@ resource "aws_iam_policy" "auth_policy" {
 EOF
 }
 
+data "aws_iam_policy" "beanstalk_policy"{
+  arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkFullAccess"
+}
+
 data "aws_iam_policy" "codepipeline_policy" {
   arn = "arn:aws:iam::aws:policy/AWSCodePipelineFullAccess"
 }
@@ -81,6 +85,11 @@ data "aws_iam_policy" "codebuild_policy" {
 
 data "aws_iam_policy" "cloudwatch_policy" {
   arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "beanstalk_attachment" {
+  policy_arn = "${data.aws_iam_policy.beanstalk_policy.arn}"
+  role = "${aws_iam_role.helloworldrole.name}"
 }
 
 resource "aws_iam_role_policy_attachment" "auth_attachment" {

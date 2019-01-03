@@ -1,5 +1,5 @@
 resource "aws_elastic_beanstalk_application" "helloworld" {
-  name = "helloworld-beanstalk"
+  name = "helloworld-beanstalk-application"
 }
 
 resource "aws_elastic_beanstalk_configuration_template" "beanstalk-template" {
@@ -13,13 +13,13 @@ resource "aws_elastic_beanstalk_environment" "hw-dev-env" {
   application = "${aws_elastic_beanstalk_application.helloworld.name}"
   template_name = "${aws_elastic_beanstalk_configuration_template.beanstalk-template.name}"
 }
-resource "aws_elastic_beanstalk_environment" "hw-test-env" {
-  name = "HelloWorld-Test-Environment"
-  application = "${aws_elastic_beanstalk_application.helloworld.name}"
-  template_name = "${aws_elastic_beanstalk_configuration_template.beanstalk-template.name}"
-}
-resource "aws_elastic_beanstalk_environment" "hw-prod-env" {
-  name = "HelloWorld-Production-Environment"
-  application = "${aws_elastic_beanstalk_application.helloworld.name}"
-  template_name = "${aws_elastic_beanstalk_configuration_template.beanstalk-template.name}"
-}
+//resource "aws_elastic_beanstalk_environment" "hw-test-env" {
+//  name = "HelloWorld-Test-Environment"
+//  application = "${aws_elastic_beanstalk_application.helloworld.name}"
+//  template_name = "${aws_elastic_beanstalk_configuration_template.beanstalk-template.name}"
+//}
+//resource "aws_elastic_beanstalk_environment" "hw-prod-env" {
+//  name = "HelloWorld-Production-Environment"
+//  application = "${aws_elastic_beanstalk_application.helloworld.name}"
+//  template_name = "${aws_elastic_beanstalk_configuration_template.beanstalk-template.name}"
+//}
