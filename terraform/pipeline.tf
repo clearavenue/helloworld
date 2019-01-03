@@ -42,6 +42,21 @@ resource "aws_codepipeline" "helloworld_pipeline" {
       }
     }
   }
+
+  "stage" {
+    name = "Deploy"
+    "action" {
+      name = "Deploy"
+      category = "Deploy"
+      owner = "AWS"
+      provider = "ElasticBeanstalk"
+      version = "1"
+      configuration {
+        ApplicationName = "helloworld"
+        EnvironmentName = "helloworld-deploymentgroup"
+      }
+    }
+  }
 }
 
 locals {
