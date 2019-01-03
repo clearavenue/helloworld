@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": "1",
+  "AWSEBDockerrunVersion": "2",
   "Image": {
     "Name": "288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest",
     "Update": "true"
