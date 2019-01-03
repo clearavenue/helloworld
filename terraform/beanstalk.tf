@@ -5,7 +5,7 @@ resource "aws_elastic_beanstalk_application" "helloworld" {
 resource "aws_elastic_beanstalk_configuration_template" "beanstalk-template" {
   name = "helloworld-beanstalk-template"
   application = "${aws_elastic_beanstalk_application.helloworld.name}"
-  solution_stack_name = "64bit Amazon Linux 2018.03 v2.12.6 running Docker 18.06.1-ce"
+  solution_stack_name = "64bit Amazon Linux 2018.03 v2.11.6 running Multi-container Docker 18.06.1-ce (Generic)"
 }
 
 resource "aws_elastic_beanstalk_environment" "hw-dev-env" {

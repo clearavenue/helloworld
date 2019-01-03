@@ -17,8 +17,11 @@ phases:
       #- docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazon.aws/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker push 288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest
       - echo Docker image pushed
-      - echo '{"AWSEBDockerrunVersion":"1","Image":{"Name":"288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest","Update":"true"},"Ports":[{"ContainerPort":"8080", "HostPort":"443"}]}' > Dockerrun.aws.json
-      - cat Dockerrun.aws.json
+      - echo Renaming Dockerrun.aws.json
+      - mv _Dockerrun.aws.json Dockerrun.aws.json
+      - echo Delete docker file
+      - rm dockerfile
+      - ls -la
 artifacts:
   files:
     - Dockerrun.aws.json
