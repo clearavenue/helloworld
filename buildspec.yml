@@ -19,10 +19,10 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       #- docker push 288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest
       - echo Docker image pushed
-      - echo Renaming Dockerrun.aws.json
       - mv _Dockerrun.aws.json Dockerrun.aws.json
-      - echo '{"AWSEBDockerrunVersion":"1","Image":{"Name":"$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG","Update":"true"},"Ports":[{"ContainerPort":"8080","HostPort":"8080"}],"EntryPoint":"java -jar /helloworld.jar"}' > Dockerrun.aws.json
+      - echo {"AWSEBDockerrunVersion":"1","Image":{"Name":"$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG","Update":"true"},"Ports":[{"ContainerPort":"8080","HostPort":"8080"}],"EntryPoint":"java -jar /helloworld.jar"} > Dockerrun.aws.json
       - ls -la
+      - cat Dockerrun.aws.json
 artifacts:
   files:
     - Dockerrun.aws.json
