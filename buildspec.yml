@@ -5,22 +5,23 @@ phases:
     commands:
       - echo Log into AWS ECR
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - echo Logged in to AWS ECR successfully
   build:
     commands:
-      - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t 288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest .
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo Docker Image tagged with - $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
-      - echo Build completed on `date`
       - echo Pushing docker image to ECR
-      #- docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazon.aws/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - docker push 288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest
+      - docker image ls
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      #- docker push 288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest
       - echo Docker image pushed
       - echo Renaming Dockerrun.aws.json
       - mv _Dockerrun.aws.json Dockerrun.aws.json
-      - echo Delete docker file
-      - rm dockerfile
+      - echo '{"AWSEBDockerrunVersion":"1","Image":{"Name":"$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG","Update":"true"},"Ports":[{"ContainerPort":"8080","HostPort":"8080"}],"EntryPoint":"java -jar /helloworld.jar"}' > Dockerrun.aws.json
       - ls -la
 artifacts:
   files:

@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "helloworld_ecr" {
-  name = "helloworld_ecr"
+  name = "${var.app_name}_ecr"
 }
 
 resource "aws_ecr_repository_policy" "ecr_policy" {
@@ -13,20 +13,7 @@ resource "aws_ecr_repository_policy" "ecr_policy" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": [
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:PutImage",
-        "ecr:InitiateLayerUpload",
-        "ecr:UploadLayerPart",
-        "ecr:CompleteLayerUpload",
-        "ecr:DescribeRepositories",
-        "ecr:GetRepositoryPolicy",
-        "ecr:ListImages",
-        "ecr:DeleteRepository",
-        "ecr:BatchDeleteImage",
-        "ecr:SetRepositoryPolicy",
-        "ecr:DeleteRepositoryPolicy"
+        "ecr:*"
       ]
     }
   ]

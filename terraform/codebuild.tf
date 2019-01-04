@@ -1,12 +1,14 @@
-resource "aws_codebuild_project" "helloworld_codebuild" {
-  name = "helloworld"
-  service_role = "${aws_iam_role.helloworldrole.arn}"
+
+resource "aws_codebuild_project" "codebuild" {
+  name = "${var.app_name}"
+  service_role = "${aws_iam_role.terraformrole.arn}"
+  depends_on = ["aws_iam_role.terraformrole", "aws_s3_bucket.bucket"]
   "artifacts" {
     type = "CODEPIPELINE"
   }
   "cache" {
     type = "S3"
-    location = "${aws_s3_bucket.helloworldbucket.bucket}"
+    location = "${aws_s3_bucket.bucket.bucket}"
   }
 
   "environment" {
@@ -17,11 +19,11 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
 
     environment_variable {
       name = "AWS_DEFAULT_REGION"
-      value = "us-east-1"
+      value = "${var.aws_region}"
     }
     environment_variable {
       name = "IMAGE_REPO_NAME"
-      value = "helloworld_ecr"
+      value = "${var.app_name}_ecr"
     }
     environment_variable {
       name = "IMAGE_TAG"
@@ -29,12 +31,12 @@ resource "aws_codebuild_project" "helloworld_codebuild" {
     }
     environment_variable {
       name = "AWS_ACCOUNT_ID"
-      value = "288524100095"
+      value = "${var.aws_account_id}"
     }
   }
 
   "source" {
     type = "CODEPIPELINE"
-    location = "${aws_s3_bucket.helloworldbucket.bucket}"
+    location = "${aws_s3_bucket.bucket.bucket}"
   }
 }
