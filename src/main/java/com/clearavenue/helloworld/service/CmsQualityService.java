@@ -33,18 +33,18 @@ public class CmsQualityService {
 	}
 
 	public String getSubmissions(String taxpayerId, String nationalId, String entityType) {
-		nationalId = nationalId.equals("null") ? "0876543210" : nationalId;
-		entityType = entityType.equals("null") ? "individual" : entityType;
-		taxpayerId = taxpayerId.equals("null") ? "000456789" : taxpayerId;
+		String nationalIdFixed = "null".equals(nationalId) ? "0876543210" : nationalId;
+		String entityTypeFixed = "null".equals(entityType) ? "individual" : entityType;
+		String taxpayerIdFixed = "null".equals(taxpayerId) ? "000456789" : taxpayerId;
 
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromHttpUrl("https://preview.qpp.cms.gov/api/submissions/submissions")
-				.queryParam("nationalProviderIdentifier", nationalId).queryParam("entityType", entityType)
+				.queryParam("nationalProviderIdentifier", nationalIdFixed).queryParam("entityType", entityTypeFixed)
 				.queryParam("itemsPerPage", 1).queryParam("startIndex", 0);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(token);
-		headers.set("qpp-taxpayer-identification-number", taxpayerId);
+		headers.set("qpp-taxpayer-identification-number", taxpayerIdFixed);
 
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		return this.restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();

@@ -60,6 +60,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -127,6 +132,9 @@
 					<skip>false</skip>
 					<printFailingErrors>true</printFailingErrors>
 					<verbose>true</verbose>
+					<rulesets>
+						<ruleset>/category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod</ruleset>
+					</rulesets>
 				</configuration>
 				<executions>
 					<execution>

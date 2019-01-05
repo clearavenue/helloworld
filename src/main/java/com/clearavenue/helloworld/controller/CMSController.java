@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CMSController {
 	
 	@GetMapping("/cms")
-	public String home(final ModelMap model) {
+	public String cms(final ModelMap model) {
 		return "cms";
 	}	
 }
