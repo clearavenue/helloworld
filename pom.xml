@@ -13,7 +13,7 @@
 
 	<groupId>com.clearavenue</groupId>
 	<artifactId>helloworld</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 
 	<name>helloworld</name>
 	<description>Hello World from clearAvenue</description>
@@ -21,6 +21,11 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<docker.image.prefix>billhunt</docker.image.prefix>
+		<dockerfile.plugin.version>1.4.9</dockerfile.plugin.version>
+		<maven.pmd.version>3.11.0</maven.pmd.version>
+		<maven.findbugs.version>3.0.5</maven.findbugs.version>
+		<jacoco.version>0.8.2</jacoco.version>
+		<jacoco.line.minimumcovered>0.10</jacoco.line.minimumcovered>
 	</properties>
 
 	<dependencies>
@@ -104,7 +109,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.4.9</version>
+				<version>${dockerfile.plugin.version}</version>
 				<configuration>
 					<verbose>true</verbose>
 					<repository>${docker.image.prefix}/${project.artifactId}</repository>
@@ -112,7 +117,112 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven.pmd.version}</version>
+				<configuration>
+					<targetJdk>${maven.compiler.target}</targetJdk>
+					<includeTests>true</includeTests>
+					<skip>false</skip>
+					<printFailingErrors>true</printFailingErrors>
+					<verbose>true</verbose>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pmd-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven.findbugs.version}</version>
+				<configuration>
+					<includeTests>true</includeTests>
+					<xmlOutput>true</xmlOutput>
+					<effort>Max</effort>
+					<failOnError>true</failOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>com/clearavenue/helloworld/HelloworldApplication.class</exclude>
+						<exclude>com/clearavenue/helloworld/model/**/*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${jacoco.line.minimumcovered}</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven.pmd.version}</version>
+				<configuration>
+					<linkXref>true</linkXref>
+					<skipEmptyReport>false</skipEmptyReport>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven.findbugs.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 
 </project>
