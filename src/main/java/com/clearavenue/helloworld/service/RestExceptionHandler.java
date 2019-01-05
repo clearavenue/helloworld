@@ -16,13 +16,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
-	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
+	protected ResponseEntity<Object> handleConflict(final RuntimeException ex, final WebRequest request) {
 		String bodyOfResponse = "This should be application specific";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}
 
 	@ExceptionHandler(value = { HttpClientErrorException.class })
-	protected ResponseEntity<Object> handleClientException(RuntimeException ex, WebRequest request) {
+	protected ResponseEntity<Object> handleClientException(final RuntimeException ex, final WebRequest request) {
 //		ex.printStackTrace();
 		String bodyOfResponse = ex.getMessage();
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);

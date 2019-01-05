@@ -12,13 +12,13 @@ public class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
 	private final String headerName;
     private final String headerValue;
 
-    public HeaderRequestInterceptor(String name, String value) {
+    public HeaderRequestInterceptor(final String name, final String value) {
         this.headerName = name;
         this.headerValue = value;
     }
     
 	@Override
-	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
+	public ClientHttpResponse intercept(final HttpRequest request, final byte[] body, final ClientHttpRequestExecution execution)
 			throws IOException {
 		request.getHeaders().set(headerName, headerValue);
         return execution.execute(request, body);

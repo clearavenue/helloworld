@@ -20,7 +20,7 @@ public class CmsQualityService {
 
 	private final RestTemplate restTemplate;
 
-	public CmsQualityService(RestTemplateBuilder restTemplateBuilder) {
+	public CmsQualityService(final RestTemplateBuilder restTemplateBuilder) {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 
@@ -32,7 +32,7 @@ public class CmsQualityService {
 		return this.restTemplate.exchange("https://preview.qpp.cms.gov/api/submissions/public/benchmarks", HttpMethod.GET, entity, ReturnedBenchmarks.class).getBody();
 	}
 
-	public String getSubmissions(String taxpayerId, String nationalId, String entityType) {
+	public String getSubmissions(final String taxpayerId, final String nationalId, final String entityType) {
 		String nationalIdFixed = "null".equals(nationalId) ? "0876543210" : nationalId;
 		String entityTypeFixed = "null".equals(entityType) ? "individual" : entityType;
 		String taxpayerIdFixed = "null".equals(taxpayerId) ? "000456789" : taxpayerId;
@@ -50,7 +50,7 @@ public class CmsQualityService {
 		return this.restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class).getBody();
 	}
 
-	public String getQualityScore(String req) {
+	public String getQualityScore(final String req) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(token);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));

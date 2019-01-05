@@ -132,6 +132,9 @@
 					<skip>false</skip>
 					<printFailingErrors>true</printFailingErrors>
 					<verbose>true</verbose>
+					<excludes>
+						<exclude>com/clearavenue/helloworld/model/**/*</exclude>
+					</excludes>
 					<rulesets>
 						<ruleset>helloworld-pmd.xml</ruleset>
 					</rulesets>

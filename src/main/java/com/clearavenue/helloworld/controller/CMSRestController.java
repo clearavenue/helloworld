@@ -26,8 +26,8 @@ public class CMSRestController {
 	}
 
 	@GetMapping("/getSubmissions/{taxpayerId}/{nationalId}/{entityType}")
-	public String getSubmissions(@PathVariable String taxpayerId, @PathVariable String nationalId,
-			@PathVariable String entityType) {
+	public String getSubmissions(final @PathVariable String taxpayerId, final @PathVariable String nationalId,
+			final @PathVariable String entityType) {
 		return service.getSubmissions(taxpayerId, nationalId, entityType);
 	}
 
@@ -38,7 +38,7 @@ public class CMSRestController {
 	}
 	
 	@PostMapping("/getScore")
-	public String getQualityScore(String req) {
+	public String getQualityScore(final String req) {
 		return service.getQualityScore(req);
 	}
 }
