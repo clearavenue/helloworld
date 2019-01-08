@@ -23,12 +23,9 @@ import com.clearavenue.helloworld.HelloworldApplication;
 import com.clearavenue.helloworld.model.ReturnedBenchmarks;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { HelloworldApplication.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@Slf4j
 public class CmsRestControllerTests {
 
 	final ObjectMapper mapper = new ObjectMapper();
