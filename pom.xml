@@ -19,7 +19,7 @@
 
 	<properties>
 		<java.pmd.version>1.8</java.pmd.version>
-		<java.release.version>8</java.release.version>
+		<!--<java.release.version>8</java.release.version>-->
 		<docker.image.prefix>billhunt</docker.image.prefix>
 		<dockerfile.plugin.version>1.4.9</dockerfile.plugin.version>
 		<maven.pmd.version>3.11.0</maven.pmd.version>
