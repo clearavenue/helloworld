@@ -6,22 +6,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "data" })
+@Getter
+@Setter
 public class ReturnedBenchmarks {
 
 	@JsonProperty("data")
 	private BenchmarkData data;
-
-	@JsonProperty("data")
-	public BenchmarkData getData() {
-		return data;
-	}
-
-	@JsonProperty("data")
-	public void setData(BenchmarkData data) {
-		this.data = data;
-	}
 	
     @Override
     public String toString() {

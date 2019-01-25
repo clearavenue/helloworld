@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "benchmarkYear",
@@ -17,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "submissionMethod",
     "measureId"
 })
+@Getter
+@Setter
 public class Benchmark {
 	@JsonProperty("benchmarkYear")
     private Integer benchmarkYear;
@@ -35,66 +40,6 @@ public class Benchmark {
     
 	@JsonProperty("measureId")
     private String measureId;
-
-    @JsonProperty("benchmarkYear")
-    public Integer getBenchmarkYear() {
-        return benchmarkYear;
-    }
-
-    @JsonProperty("benchmarkYear")
-    public void setBenchmarkYear(Integer benchmarkYear) {
-        this.benchmarkYear = benchmarkYear;
-    }
-
-    @JsonProperty("performanceYear")
-    public Integer getPerformanceYear() {
-        return performanceYear;
-    }
-
-    @JsonProperty("performanceYear")
-    public void setPerformanceYear(Integer performanceYear) {
-        this.performanceYear = performanceYear;
-    }
-
-    @JsonProperty("deciles")
-    public List<Integer> getDeciles() {
-        return deciles;
-    }
-
-    @JsonProperty("deciles")
-    public void setDeciles(List<Integer> deciles) {
-        this.deciles = deciles;
-    }
-
-    @JsonProperty("status")
-    public String getStatus() {
-        return status;
-    }
-
-    @JsonProperty("status")
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @JsonProperty("submissionMethod")
-    public String getSubmissionMethod() {
-        return submissionMethod;
-    }
-
-    @JsonProperty("submissionMethod")
-    public void setSubmissionMethod(String submissionMethod) {
-        this.submissionMethod = submissionMethod;
-    }
-
-    @JsonProperty("measureId")
-    public String getMeasureId() {
-        return measureId;
-    }
-
-    @JsonProperty("measureId")
-    public void setMeasureId(String measureId) {
-        this.measureId = measureId;
-    }
     
     @Override
     public String toString() {

@@ -1,11 +1,18 @@
 package com.clearavenue.helloworld.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "id", "measurementSetId", "measureId", "value" })
+@Getter
+@Setter
 public class Measurement {
     @JsonProperty("id")
     private String id;
@@ -18,45 +25,10 @@ public class Measurement {
     
     @JsonProperty("value")
     private Boolean value;
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
-    }
-
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @JsonProperty("measurementSetId")
-    public String getMeasurementSetId() {
-        return measurementSetId;
-    }
-
-    @JsonProperty("measurementSetId")
-    public void setMeasurementSetId(String measurementSetId) {
-        this.measurementSetId = measurementSetId;
-    }
-
-    @JsonProperty("measureId")
-    public String getMeasureId() {
-        return measureId;
-    }
-
-    @JsonProperty("measureId")
-    public void setMeasureId(String measureId) {
-        this.measureId = measureId;
-    }
-
-    @JsonProperty("value")
-    public Boolean getValue() {
-        return value;
-    }
-
-    @JsonProperty("value")
-    public void setValue(Boolean value) {
-        this.value = value;
+    
+    @Override
+    public String toString() {
+    	return ToStringBuilder.reflectionToString(this);
     }
 
 }
