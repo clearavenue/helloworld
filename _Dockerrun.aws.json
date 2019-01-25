@@ -1,1 +1,0 @@
-{"AWSEBDockerrunVersion": "1", "Image": {"Name": "288524100095.dkr.ecr.us-east-1.amazonaws.com/helloworld_ecr:latest", "Update": "true"},"Ports": [{"ContainerPort": "8080","HostPort": "8080"}],"EntryPoint": "java -jar /helloworld.jar"}
