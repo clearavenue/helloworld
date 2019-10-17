@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.1.RELEASE</version>
+		<version>2.1.5.RELEASE</version>
 	</parent>
 
 	<groupId>com.clearavenue</groupId>
@@ -22,10 +22,11 @@
 		<!--<java.release.version>8</java.release.version>-->
 		<docker.image.prefix>billhunt</docker.image.prefix>
 		<dockerfile.plugin.version>1.4.9</dockerfile.plugin.version>
-		<maven.pmd.version>3.11.0</maven.pmd.version>
+		<maven.pmd.version>3.12.0</maven.pmd.version>
 		<spotbugs.version>3.1.10</spotbugs.version>
 		<jacoco.version>0.8.2</jacoco.version>
 		<jacoco.line.minimumcovered>0.10</jacoco.line.minimumcovered>
+		<jackson.version>2.10.0</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -75,7 +76,11 @@
 			<version>3.1.10</version>
 			<optional>true</optional>
 		</dependency>
-
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -226,7 +231,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>4.0.2</version>
+				<version>5.2.2</version>
 				<configuration>
 					<failBuildOnCVSS>8</failBuildOnCVSS>
 				</configuration>
