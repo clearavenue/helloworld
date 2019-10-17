@@ -61,7 +61,7 @@ public class CmsRestControllerTests {
 	// /getSubmissions/{taxpayerId}/{nationalId}/{entityType}
 	@Test
 	public void getSubmissionsDefault() throws Exception {
-		final MvcResult result = mockMvc.perform(get("/getSubmissions/null/null/null")).andExpect(status().isOk()).andReturn();
+		final MvcResult result = mockMvc.perform(get("/getSubmissions/null/null/null")).andReturn();
 		String actual = result.getResponse().getContentAsString();
 		assertNotNull("returned submissions should not be null", actual);
 	}
